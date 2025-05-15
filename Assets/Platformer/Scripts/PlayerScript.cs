@@ -22,6 +22,8 @@ public class PlayerScript : MonoBehaviour
 
     public TextMeshPro ScoreText;
     
+    private Animator animator;
+    
     //My personal stats
     public float Speed = 5;
     public float JumpPower = 10;
@@ -48,6 +50,8 @@ public class PlayerScript : MonoBehaviour
          
         //Set our rigidbody's gravity to match our stats 
         RB.gravityScale = Gravity;
+        
+        animator = GetComponent<Animator>();
     }
 
     void Update()
@@ -57,7 +61,8 @@ public class PlayerScript : MonoBehaviour
         Vector2 vel = RB.linearVelocity;
 
         if (Input.GetKey(KeyCode.RightArrow) || Input.GetKey(KeyCode.D))
-        { 
+        {
+            animator.SetBool("IsWalking", true);
             //If I hit right, move right
             vel.x = Speed;
             //If I hit right, mark that I'm not facing left
@@ -73,6 +78,7 @@ public class PlayerScript : MonoBehaviour
         else
         {  //If I hit neither, come to a stop
             vel.x = 0;
+            animator.SetBool("IsWalking", false);
         }
 
         //If I hit Space and can jump, jump
